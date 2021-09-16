@@ -1,0 +1,6 @@
+<ng-container [formGroup]="formGroup">
+  <label *ngIf="label">{{label}}</label>
+  <dx-select-box [formControlName]="controlName" [items]="items" [placeholder]="placeholder"
+  [readOnly]="readOnly" (onValueChanged)="onChange" [showClearButton]="true"
+  [valueExpr]="valueExpr" [displayExpr]="displayExpr" [isValid]="isValid"></dx-select-box>
+</ng-container>

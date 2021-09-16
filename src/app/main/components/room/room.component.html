@@ -1,0 +1,4 @@
+<h1>Working places</h1>
+<div class="workingplace-case" *ngFor="let workplace of (workplaces$ | async); trackBy:trackWorkplaces" (click)="workplaceClicked(workplace.workplaceId)">
+  {{ workplace | workplaceSnapshot }}
+</div>

@@ -1,0 +1,6 @@
+<ng-container [formGroup]="formGroup">
+  <label *ngIf="label">{{label}}</label>
+  <dx-date-box [formControlName]="controlName" [placeholder]="placeholder" applyValueMode="useButtons" [(value)]="value" [min]="min" [max]="max"
+  [pickerType]="pickerType" [isValid]="isValid">
+  </dx-date-box>
+</ng-container>

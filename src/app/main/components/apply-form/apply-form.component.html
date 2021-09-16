@@ -1,0 +1,28 @@
+<h1>Applying to workplace №{{workplaceId}}</h1>
+<div class="apply-box">
+  <div>
+    <app-select-box [formGroup]="applyForm" label="Role" [items]="roles"
+    controlName="role" [isValid]="!(this.submitted && form.role.errors)"></app-select-box>
+    <app-select-box [formGroup]="applyForm" label="Work status" [items]="workStatuses"
+    controlName="workStatus" [isValid]="!(this.submitted && form.workStatus.errors)"></app-select-box>
+    <label>Shift</label>
+    <div class="shift-box">
+      <app-select-box class="shift" [formGroup]="applyForm" placeholder="start" [items]="shiftStart"
+      controlName="shiftStart" [isValid]="!(this.submitted && form.shiftStart.errors)"></app-select-box>
+      <app-select-box class="shift" [formGroup]="applyForm" placeholder="end" [items]="shiftEnd"
+      controlName="shiftEnd" [isValid]="!(this.submitted && form.shiftEnd.errors)"></app-select-box>
+    </div>
+    <button (click)="applyAsCurrentEmployee()">Apply as current employee</button>
+  </div>
+  <div class="container">
+    <app-text-box [formGroup]="applyForm" label="First Name" controlName="firstName" [isValid]="!(this.submitted && form.firstName.errors)"></app-text-box>
+    <app-text-box [formGroup]="applyForm" label="Last Name" controlName="lastName" [isValid]="!(this.submitted && form.lastName.errors)"></app-text-box>
+    <app-text-box [formGroup]="applyForm" label="Patronymic" controlName="patronymic" [isValid]="!(this.submitted && form.patronymic.errors)"></app-text-box>
+    <app-date-box [formGroup]="applyForm" label="Birth date" controlName="birthDate"
+    [min]="min" [max]="max" [pickerType]="pickerType" [isValid]="!(this.submitted && form.birthDate.errors)"></app-date-box>
+    <button (click)="sendApplication()">Submit application</button>
+  </div>
+  <div>
+    <h2>Note: in case of your application on this place, your username will be set as 'firstName+lastName+patronymic'</h2>
+  </div>
+</div>

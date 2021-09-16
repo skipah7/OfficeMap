@@ -1,0 +1,11 @@
+<h1>Workplace №{{ workplaceId }} information:</h1>
+<div *ngIf="workplace$ | async as workplace">
+  <p *ngIf="workplace.employee">Employee: {{ workplace.employee }}</p>
+  <p *ngIf="workplace.employeeRole">Role: {{ workplace.employeeRole }}</p>
+  <p *ngIf="workplace.birthDate">Birth date: {{ workplace.birthDate | date}}</p>
+  <p >Equipment on workplace: {{ workplace.equipment }}</p>
+  <p *ngIf="workplace.workStatus">Employee works at: {{ workplace.workStatus }}</p>
+  <p *ngIf="workplace.regime">Regime: {{ workplace.regime | regime }}</p>
+
+  <button *ngIf="!workplace.employee" (click)="applyToWorkplace(workplace.id)">Apply to this workplace</button>
+</div>

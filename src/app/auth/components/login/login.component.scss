@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  flex: 1;
+  padding: 40px;
+  justify-content: center;
+  align-items: center;
+}
+form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 400px;
+  min-height: 200px;
+  border: 1px solid black;
+  label {
+    display: block;
+    margin-bottom: 4px;
+    margin-top: 16px;
+  }
+}

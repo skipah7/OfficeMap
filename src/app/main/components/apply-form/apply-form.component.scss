@@ -1,0 +1,23 @@
+.apply-box {
+  display: flex;
+  flex-direction: row;
+  div {
+    padding: 4px;
+  }
+}
+
+label {
+  display: block;
+  padding: 6px;
+}
+.shift-box {
+  display: flex;
+  flex-direction: row;
+  .shift {
+    width: 125px;
+  }
+}
+
+.container {
+  min-width: 200px;
+}

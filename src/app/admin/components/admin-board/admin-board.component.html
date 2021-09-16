@@ -1,0 +1,85 @@
+<h1>Admin dashboard</h1>
+<div class="dashboard">
+  <div class="dashboard-item">
+    <h3>Add employee</h3>
+    <app-text-box [formGroup]="addEmployeeForm" label="First Name" controlName="firstName"
+      [isValid]="!(this.addEmployeeSubmitted && formA.firstName.errors)"></app-text-box>
+    <app-text-box [formGroup]="addEmployeeForm" label="Last Name" controlName="lastName"
+      [isValid]="!(this.addEmployeeSubmitted && formA.lastName.errors)"></app-text-box>
+    <app-text-box [formGroup]="addEmployeeForm" label="Patronymic" controlName="patronymic"
+      [isValid]="!(this.addEmployeeSubmitted && formA.patronymic.errors)"></app-text-box>
+    <app-text-box [formGroup]="addEmployeeForm" label="Username" controlName="username"
+      [isValid]="!(this.addEmployeeSubmitted && formA.username.errors)"></app-text-box>
+    <button (click)="addEmployee()">Add Employee</button>
+  </div>
+  <div class="dashboard-item">
+    <h3>Edit employee</h3>
+    <app-text-box [formGroup]="editEmployeeForm" label="Enter employee's ID" controlName="id"
+      [isValid]="!(this.editEmployeeSubmitted && formE.id.errors)"></app-text-box>
+    <app-text-box [formGroup]="editEmployeeForm" label="First Name" controlName="firstName"
+      [isValid]="!(this.editEmployeeSubmitted && formE.firstName.errors)"></app-text-box>
+    <app-text-box [formGroup]="editEmployeeForm" label="Last Name" controlName="lastName"
+      [isValid]="!(this.editEmployeeSubmitted && formE.lastName.errors)"></app-text-box>
+    <app-text-box [formGroup]="editEmployeeForm" label="Patronymic" controlName="patronymic"
+      [isValid]="!(this.editEmployeeSubmitted && formE.patronymic.errors)"></app-text-box>
+    <app-text-box [formGroup]="editEmployeeForm" label="Username" controlName="username"
+      [isValid]="!(this.editEmployeeSubmitted && formE.username.errors)"></app-text-box>
+    <app-text-box [formGroup]="editEmployeeForm" label="Password" controlName="password"></app-text-box>
+    <button (click)="editEmployee()">Edit employee</button>
+  </div>
+  <div class="dashboard-item">
+    <h3>Employees</h3>
+    <ul *ngIf="employees$ | async">
+      <li *ngFor="let employee of employees$ | async">
+        <div (click)="employeeClicked(employee)">{{ employee.id }} - {{ employee.firstName }} {{ employee.lastName }} {{
+          employee.patronymic }}</div>
+        <button (click)="deleteEmployee(employee.id)">Delete</button>
+      </li>
+    </ul>
+  </div>
+  <div class="dashboard-item-workplace">
+    <h3>Edit workplace</h3>
+    <app-select-box [formGroup]="editWorkplaceForm" label="Choose workplace" controlName="id" [items]="workplaceList"
+      displayExpr="label" valueExpr="value" [isValid]="!(this.editWorkplacesSubmitted && formW.id.errors)">
+    </app-select-box>
+    <app-text-box [formGroup]="editWorkplaceForm" label="Edit equipment" controlName="equipment"
+      [readOnly]="isWorkplaceChoosed()" [isValid]="!(this.editWorkplacesSubmitted && formW.equipment.errors)">
+    </app-text-box>
+    <app-select-box [formGroup]="editWorkplaceForm" label="Choose employee" controlName="employee"
+      [items]="getEmployeesSnapshot()" [readOnly]="isWorkplaceChoosed()"
+      [isValid]="!(this.editWorkplacesSubmitted && formW.employee.errors)"></app-select-box>
+    <app-select-box [formGroup]="editWorkplaceForm" label="Edit role" controlName="role" [items]="roles"
+      [readOnly]="isEmployeeChoosed()" [isValid]="!(this.editWorkplacesSubmitted && formW.role.errors)">
+    </app-select-box>
+    <app-select-box [formGroup]="editWorkplaceForm" label="Edit work status" controlName="workStatus"
+      [items]="workStatus" [readOnly]="isEmployeeChoosed()"
+      [isValid]="!(this.editWorkplacesSubmitted && formW.workStatus.errors)"></app-select-box>
+    <label>Edit shift</label>
+    <div class="shift-box">
+      <app-select-box class="shift" [formGroup]="editWorkplaceForm" placeholder="start" [items]="shiftStart"
+        controlName="shiftStart" [readOnly]="isEmployeeChoosed()"
+        [isValid]="!(this.editWorkplacesSubmitted && formW.shiftStart.errors)"></app-select-box>
+      <app-select-box class="shift" [formGroup]="editWorkplaceForm" placeholder="end" [items]="shiftEnd"
+        controlName="shiftEnd" [readOnly]="isEmployeeChoosed()"
+        [isValid]="!(this.editWorkplacesSubmitted && formW.shiftEnd.errors)"></app-select-box>
+    </div>
+    <div class="workplace-buttons">
+      <button class="delete-button" (click)="freeWorkplace()">Free workplace</button>
+      <button (click)="editWorkplace()">Confirm</button>
+    </div>
+  </div>
+  <div class="dashboard-item-applications" *ngIf="applications$ | async">
+    <h3>Review applications</h3>
+    <div class="application" *ngFor="let application of applications$ | async">
+      <p>Application on workplace №{{ application.id }}</p>
+      <p><span class="solid">{{ application.employee }}</span> wants to work as <span class="solid">{{
+          application.employeeRole }}</span> dev.</p>
+      <p>Desired work status: <span class="solid">{{ application.workStatus }}</span>. Shift: <span class="solid">{{
+          application.regime | regime}}</span></p>
+      <div class="workplace-buttons">
+        <button class="delete-button" (click)="denyApplication(application.employee)">Deny</button>
+        <button (click)="acceptApplication(application.employee)">Accept</button>
+      </div>
+    </div>
+  </div>
+</div>

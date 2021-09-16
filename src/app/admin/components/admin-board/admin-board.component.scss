@@ -1,0 +1,58 @@
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  .dashboard-item {
+    margin: 30px;
+
+  }
+
+  .dashboard-item-workplace {
+    margin: 30px;
+    width: 250px;
+    label {
+      display: block;
+      padding: 6px;
+    }
+    .shift-box {
+      display: flex;
+      flex-direction: row;
+      .shift {
+        width: 125px;
+      }
+    }
+  }
+
+  .dashboard-item-applications {
+    margin: 30px;
+    .application {
+      border: solid 1px;
+      margin: 4px;
+    }
+  }
+}
+ul {
+  margin: 0px;
+  padding: 0px;
+  li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2px;
+    margin: 2px;
+    width: 300px;
+  }
+}
+
+
+.workplace-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin: 4px;
+  .delete-button {
+    background-color: red;
+  }
+}
+
+.solid {
+  font-weight: bold;
+}

@@ -1,0 +1,19 @@
+<form [formGroup]="loginForm" (ngSubmit)="credentialsSubmitted()">
+  <div class="control-group">
+    <label class="login-label">Enter your username</label>
+    <dx-text-box formControlName="username" placeholder="Enter username" [isValid]="!(submitted && form.username.errors)"></dx-text-box>
+    <label class="login-label">Enter your employee-password</label>
+    <dx-text-box
+      formControlName="password"
+      mode="password"
+      placeholder="Enter password"
+    ></dx-text-box>
+  </div>
+  <button>Login</button>
+</form>
+
+<jw-modal id="custom-modal">
+  <h1>You are a new employee</h1>
+  <p>Set a password: <dx-text-box type="text" [(value)]="newPassword" valueChangeEvent="keyup"></dx-text-box></p>
+  <button [disabled]="isNewPasswordEmpty()" (click)="closeModal('custom-modal');">Set password</button>
+</jw-modal>
