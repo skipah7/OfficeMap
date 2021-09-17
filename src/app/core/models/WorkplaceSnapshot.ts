@@ -1,4 +1,4 @@
 export interface WorkplaceSnapshot {
   workplaceId: number,
-  employee: string
+  employee: string,
 }

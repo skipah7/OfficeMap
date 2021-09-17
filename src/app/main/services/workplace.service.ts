@@ -6,6 +6,6 @@ import { Workplace } from '@core/models'
 export class WorkplaceService {
   constructor(private http: HttpClient) { }
   getWorkplace(id: number) {
-    return this.http.get<Workplace>(`/workplace/${id}`)
+    return this.http.get<Workplace>(`/workplace/${id}`);
   }
 }

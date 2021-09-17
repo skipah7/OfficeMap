@@ -1,1 +1,1 @@
-export * from './backend.interceptor'
+export * from './backend.interceptor';

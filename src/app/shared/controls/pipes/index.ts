@@ -1,1 +1,1 @@
-export * from './regime.pipe'
+export * from './regime.pipe';

@@ -5,5 +5,5 @@ export interface Workplace {
   birthDate?: Date,
   equipment?: string,
   workStatus?: 'remote' | 'office',
-  regime?: number[]
+  regime?: number[],
 }

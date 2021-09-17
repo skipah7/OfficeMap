@@ -6,7 +6,7 @@ import { AdminBoardComponent } from './components/admin-board/admin-board.compon
 
 @NgModule({
   declarations: [
-    AdminBoardComponent
+    AdminBoardComponent,
   ],
   imports: [
     CommonModule,

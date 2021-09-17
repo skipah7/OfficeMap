@@ -1,23 +1,24 @@
-import { Component } from '@angular/core'
-import { Router } from '@angular/router'
-import { Room } from '@core/models'
-import { FeatureCollection, HomeService } from '@main/services/home.service'
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { first } from 'rxjs/operators'
+
+import { Room } from '@core/models';
+import { FeatureCollection, HomeService } from '@main/services/home.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  projection: any
-  roomsData: FeatureCollection
-  buildingData: FeatureCollection
-  rooms: Room[] = []
+  projection: any;
+  roomsData: FeatureCollection;
+  buildingData: FeatureCollection;
+  rooms: Room[] = [];
 
   constructor(
     private router: Router,
-    private homeService: HomeService
+    private homeService: HomeService,
   ) {
     this.roomsData = this.homeService.getRoomsData();
     this.buildingData = this.homeService.getBuildingData();
@@ -30,14 +31,14 @@ export class HomeComponent {
       }
     };
     this.homeService.getRooms().pipe(first()).subscribe(rooms => {
-      this.rooms = rooms
-    })
+      this.rooms = rooms;
+    });
   }
 
   layerClicked(event: any) {
-    const layerId: number = event.target?.attribute('id')
+    const layerId: number = event.target?.attribute('id');
     if (layerId) {
-      this.router.navigate(['/room'], { queryParams: { roomId: layerId } })
+      this.router.navigate(['/room'], { queryParams: { roomId: layerId } });
     }
   }
 

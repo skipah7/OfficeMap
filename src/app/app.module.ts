@@ -22,7 +22,7 @@ import { AuthGuard } from './auth/guards/auth.guard';
       useClass: BackendInterceptor,
       multi: true
     },
-    AuthGuard
+    AuthGuard,
   ],
   bootstrap: [AppComponent]
 })

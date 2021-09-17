@@ -6,7 +6,7 @@ import { ModalService } from '../services/modal.service'
     selector: 'jw-modal',
     templateUrl: 'auth-modal.component.html',
     styleUrls: ['auth-modal.component.scss'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
 export class AuthModalComponent implements OnInit, OnDestroy {
     @Input() id: string ='';

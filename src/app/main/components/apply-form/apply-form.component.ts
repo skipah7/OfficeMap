@@ -1,25 +1,26 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { first } from 'rxjs/operators';
+
 import { Workplace } from '@core/models';
 import { ApplyService } from '@main/services/apply.service';
-import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-apply-form',
   templateUrl: './apply-form.component.html',
   styleUrls: ['./apply-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ApplyFormComponent {
-  workplaceId: number = this.activatedRoute.snapshot.queryParams['workplaceId'] as number
-  roles: string[] = ['frontend', 'backend']
-  workStatuses: string[] = ['office', 'remote']
-  shiftStart: string[] = ['8:00', '9:00', '10:00', '11:00', '12:00', '13:00']
-  shiftEnd: string[] = ['17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
-  max: Date = new Date()
-  min: Date = new Date(1900, 0, 1)
-  pickerType: string = 'rollers'
+  workplaceId: number = this.activatedRoute.snapshot.queryParams['workplaceId'] as number;
+  roles: string[] = ['frontend', 'backend'];
+  workStatuses: string[] = ['office', 'remote'];
+  shiftStart: string[] = ['8:00', '9:00', '10:00', '11:00', '12:00', '13:00'];
+  shiftEnd: string[] = ['17:00', '18:00', '19:00', '20:00', '21:00', '22:00'];
+  max: Date = new Date();
+  min: Date = new Date(1900, 0, 1);
+  pickerType: string = 'rollers';
   submitted: boolean = false;
 
   applyForm: FormGroup = this.formBuilder.group({
@@ -30,33 +31,34 @@ export class ApplyFormComponent {
     firstName: [null, Validators.required],
     lastName: [null, Validators.required],
     patronymic: [null, Validators.required],
-    birthDate: [null, Validators.required]
+    birthDate: [null, Validators.required],
   })
 
   get form() {
-    return this.applyForm.controls
+    return this.applyForm.controls;
   }
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private applyService: ApplyService
+    private applyService: ApplyService,
   ) { }
 
   applyAsCurrentEmployee() {
-    const currentEmployee = JSON.parse(localStorage.getItem('currentEmployee') as string)
+    const currentEmployee = JSON.parse(localStorage.getItem('currentEmployee') as string);
     if (!currentEmployee) {
-      return
-    }
+      return;
+    };
+
     this.applyForm.patchValue({
       firstName: currentEmployee.firstName,
       lastName: currentEmployee.lastName,
-      patronymic: currentEmployee.patronymic
+      patronymic: currentEmployee.patronymic,
     })
   }
 
   get isValidOnApply(): boolean {
-    return !this.applyForm.valid
+    return !this.applyForm.valid;
   }
 
   sendApplication() {

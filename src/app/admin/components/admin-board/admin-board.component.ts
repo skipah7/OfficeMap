@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { first, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AdminService } from '@admin/services/admin.service';
-
-import { first, map } from 'rxjs/operators';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { Employee, Workplace, WorkplaceList } from '@core/models';
 
 @Component({
@@ -34,21 +33,19 @@ export class AdminBoardComponent implements OnInit {
   editEmployeeSubmitted = false;
   editWorkplacesSubmitted = false;
 
+  constructor(
+    private adminService: AdminService,
+    private formBuilder: FormBuilder,
+    private cdr: ChangeDetectorRef,
+  ) { }
+
   ngOnInit() {
-    this.applications$.pipe(
-      map(res => {
-        return res.map((application) => application.employee as string);
-      }),
-      first()
-    ).subscribe((data) => {
-      this.applicationsSnapshot = [...data];
-    });
+    this.initApplications();
+    this.initWorkplaces();
+    this.initEmployees();
 
-    this.initWorkplaces()
-    this.initEmployees()
-
-    this.editWorkplaceForm.get('id')?.valueChanges.subscribe((x) => this.workplaceSelectChanged(x))
-    this.editWorkplaceForm.get('employee')?.valueChanges.subscribe((x) => this.employeeSelectChanged(x))
+    this.editWorkplaceForm.get('id')?.valueChanges.subscribe((x) => this.workplaceSelectChanged(x));
+    this.editWorkplaceForm.get('employee')?.valueChanges.subscribe((x) => this.employeeSelectChanged(x));
   }
 
   initWorkplaces() {
@@ -58,7 +55,7 @@ export class AdminBoardComponent implements OnInit {
         return res.map((workplace) => {
           return {
             value: workplace.id,
-            label: `${workplace.id} - ${workplace.employee || 'empty'}`
+            label: `${workplace.id} - ${workplace.employee || 'empty'}`,
           };
         })
       }),
@@ -82,15 +79,21 @@ export class AdminBoardComponent implements OnInit {
     });
   }
 
-  employeeFullName(employee: Employee): string {
-    return `${employee.firstName} ${employee.lastName} ${employee.patronymic}`
+  initApplications() {
+    this.applications$.pipe(
+      map(res => {
+        return res.map((application) => application.employee as string);
+      }),
+      first()
+    ).subscribe((data) => {
+      this.applicationsSnapshot = [...data];
+      this.cdr.markForCheck();
+    });
   }
 
-  constructor(
-    private adminService: AdminService,
-    private formBuilder: FormBuilder,
-    private cdr: ChangeDetectorRef,
-  ) { }
+  employeeFullName(employee: Employee): string {
+    return `${employee.firstName} ${employee.lastName} ${employee.patronymic}`;
+  }
 
   // application section
 
@@ -117,10 +120,10 @@ export class AdminBoardComponent implements OnInit {
   });
 
   get formW() {
-    return this.editWorkplaceForm.controls
+    return this.editWorkplaceForm.controls;
   }
 
-  getEmployeesSnapshot() {
+   get getEmployeesSnapshot() {
     return this.employeesSnapshot;
   }
 
@@ -128,7 +131,7 @@ export class AdminBoardComponent implements OnInit {
     this.currenWorkplaceId = value;
     for (let key in this.editWorkplaceForm.controls) {
       if (key !== 'id') this.editWorkplaceForm.controls[key].reset();
-    }
+    };
     const currentWorkplace = this.workplaces.find((processingWorkplace) => processingWorkplace.id === value);
     this.editWorkplaceForm.patchValue({ equipment: currentWorkplace?.equipment });
 
@@ -138,15 +141,15 @@ export class AdminBoardComponent implements OnInit {
       role: currentWorkplace.employeeRole,
       workStatus: currentWorkplace.workStatus,
       shiftStart: this.transformTime(currentWorkplace.regime[0]),
-      shiftEnd: this.transformTime(currentWorkplace.regime[1])
+      shiftEnd: this.transformTime(currentWorkplace.regime[1]),
     });
   }
 
   employeeSelectChanged(value: string) {
-    this.editWorkplaceForm.get('role')?.reset()
-    this.editWorkplaceForm.get('workStatus')?.reset()
-    this.editWorkplaceForm.get('shiftStart')?.reset()
-    this.editWorkplaceForm.get('shiftEnd')?.reset()
+    this.editWorkplaceForm.get('role')?.reset();
+    this.editWorkplaceForm.get('workStatus')?.reset();
+    this.editWorkplaceForm.get('shiftStart')?.reset();
+    this.editWorkplaceForm.get('shiftEnd')?.reset();
 
     this.checkSelectedEmployee(value);
   }
@@ -159,7 +162,7 @@ export class AdminBoardComponent implements OnInit {
       role: currentWorkplace.employeeRole,
       workStatus: currentWorkplace.workStatus,
       shiftStart: this.transformTime(currentWorkplace.regime[0]),
-      shiftEnd: this.transformTime(currentWorkplace.regime[1])
+      shiftEnd: this.transformTime(currentWorkplace.regime[1]),
     });
   }
 
@@ -173,8 +176,8 @@ export class AdminBoardComponent implements OnInit {
       return;
     }
 
-    const shiftStart = value.shiftStart.replace(':','') as number
-    const shiftEnd = value.shiftEnd.replace(':','') as number
+    const shiftStart = value.shiftStart.replace(':','') as number;
+    const shiftEnd = value.shiftEnd.replace(':','') as number;
     const newWorkplace: Workplace = {
       id: value.id,
       employee: value.employee,
@@ -199,7 +202,7 @@ export class AdminBoardComponent implements OnInit {
       shiftStart: '',
       shiftEnd: '',
     })
-    this.initWorkplaces()
+    this.initWorkplaces();
   }
 
   transformTime(time: number): string {
@@ -273,7 +276,7 @@ export class AdminBoardComponent implements OnInit {
     this.adminService.addEmployee(this.addEmployeeForm.value)
       .pipe(first()).subscribe(() => {
         this.employeesSnapshot.push(this.employeeFullName(this.addEmployeeForm.value));
-        this.cdr.markForCheck()
+        this.cdr.markForCheck();
       });
     this.addEmployeeSubmitted = false;
   }
@@ -281,12 +284,14 @@ export class AdminBoardComponent implements OnInit {
   editEmployee() {
     this.editEmployeeSubmitted = true;
     if (this.editEmployeeForm.invalid) return;
-    this.editEmployeeForm.value.id = Number(this.editEmployeeForm.value.id)
+
+    this.editEmployeeForm.value.id = Number(this.editEmployeeForm.value.id);
     this.adminService.editEmployee(this.editEmployeeForm.value)
       .pipe(first())
       .subscribe();
 
     this.initEmployees();
+    this.initWorkplaces()
     this.editEmployeeSubmitted = false;
   }
 }

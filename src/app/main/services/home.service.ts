@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
-import { Room } from '@core/models'
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Room } from '@core/models';
 
 export class FeatureCollection {
   type?: string
@@ -8,9 +8,9 @@ export class FeatureCollection {
 }
 
 export class Feature {
-  type?: string
-  properties?: FeatureProperty
-  geometry?: FeatureGeometry
+  type?: string;
+  properties?: FeatureProperty;
+  geometry?: FeatureGeometry;
 }
 
 export class FeatureProperty {

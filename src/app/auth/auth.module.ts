@@ -8,7 +8,7 @@ import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     CommonModule,
@@ -18,7 +18,7 @@ import { LoginComponent } from './components/login/login.component';
       component: LoginComponent
     }]),
     ReactiveFormsModule,
-    ModalsModule
+    ModalsModule,
   ],
   providers: []
 })

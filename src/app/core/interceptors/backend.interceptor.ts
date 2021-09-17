@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
+
 import { Employee, Room, Workplace, WorkplaceSnapshot } from '@core/models';
 
 // arrays in local storage
-let employees: Employee[] = JSON.parse(localStorage.getItem('employees') as string) || []
-let rooms: Room[] = JSON.parse(localStorage.getItem('rooms') as string) || []
-let workplaces: Workplace[] = JSON.parse(localStorage.getItem('workplaces') as string) || []
-let applications: Workplace[] = JSON.parse(localStorage.getItem('applications') as string) || []
+let employees: Employee[] = JSON.parse(localStorage.getItem('employees') as string) || [];
+let rooms: Room[] = JSON.parse(localStorage.getItem('rooms') as string) || [];
+let workplaces: Workplace[] = JSON.parse(localStorage.getItem('workplaces') as string) || [];
+let applications: Workplace[] = JSON.parse(localStorage.getItem('applications') as string) || [];
 
 @Injectable()
 export class BackendInterceptor implements HttpInterceptor {
@@ -69,7 +70,7 @@ export class BackendInterceptor implements HttpInterceptor {
       if (!employees[currentUserIndex]) return errorResponse('This user probably already has password somehow');
 
       employees[currentUserIndex].password = window.btoa(password);
-      return okResponse()
+      return okResponse();
     }
 
     function authenticate() {
@@ -80,8 +81,8 @@ export class BackendInterceptor implements HttpInterceptor {
         return okResponse({
           username: username,
           setPassword: true,
-        })
-      }
+        });
+      };
 
       if (!user) return errorResponse('username or password is incorrect');
 
@@ -99,16 +100,16 @@ export class BackendInterceptor implements HttpInterceptor {
     function register() {
       if (!isLoggedIn()) return unauthorized();
 
-      const employee: Employee = body
+      const employee: Employee = body;
       if (employees.find((x: Employee) => x.username === employee.username)) {
-        return errorResponse('Employeename "' + employee.username + '" is already taken')
+        return errorResponse('Employeename "' + employee.username + '" is already taken');
       }
 
-      employee.id = employees.length ? Math.max(...employees.map((x: Employee) => x.id)) + 1 : 1
-      employees.push(employee)
-      localStorage.setItem('employees', JSON.stringify(employees))
+      employee.id = employees.length ? Math.max(...employees.map((x: Employee) => x.id)) + 1 : 1;
+      employees.push(employee);
+      localStorage.setItem('employees', JSON.stringify(employees));
 
-      return okResponse()
+      return okResponse();
     }
 
     function editEmployee() {
@@ -119,7 +120,13 @@ export class BackendInterceptor implements HttpInterceptor {
       };
 
       const editIndex = employees.findIndex((processingEmployee) => processingEmployee.id === employee.id);
-      employee.password = employees[editIndex].password;
+
+      if (!employee.password && employees[editIndex].password) {
+        employee.password = employees[editIndex].password;
+      } else {
+        employee.password = window.btoa(employee.password as string);
+      }
+
       employees.splice(editIndex, 1);
       employees.splice(editIndex, 0, employee);
       localStorage.setItem('employees', JSON.stringify(employees));
@@ -133,20 +140,20 @@ export class BackendInterceptor implements HttpInterceptor {
 
     function deleteEmployee() {
       if (!isLoggedIn()) return unauthorized();
-      deleteEmployeeById(idFromUrl())
+      deleteEmployeeById(idFromUrl());
       return okResponse();
     }
 
     function deleteEmployeeById(id: number) {
       const deleteIndex = employees.findIndex((processingEmployee) => processingEmployee.id === id);
-      freeWorkplaceOfEmployee(employees[deleteIndex])
+      freeWorkplaceOfEmployee(employees[deleteIndex]);
       employees.splice(deleteIndex, 1)
       localStorage.setItem('employees', JSON.stringify(employees));
     }
 
     function freeWorkplaceOfEmployee(employee: Employee) {
       const workplace = workplaces.find((processingWorkplace) => {
-        return processingWorkplace.employee === `${employee.firstName} ${employee.lastName} ${employee.patronymic}`
+        return processingWorkplace.employee === `${employee.firstName} ${employee.lastName} ${employee.patronymic}`;
       });
 
       if (!workplace) return;
@@ -156,20 +163,20 @@ export class BackendInterceptor implements HttpInterceptor {
     // rooms functions
     function getRooms() {
       if (!isLoggedIn()) return unauthorized();
-      return okResponse(rooms)
+      return okResponse(rooms);
     }
 
     function getRoomSnapshot() {
       if (!isLoggedIn()) return unauthorized();
 
-      let roomSnapshot: WorkplaceSnapshot[] = []
-      const requestedRoom = rooms.find((processingRoom: Room) => processingRoom.id === idFromUrl())
+      let roomSnapshot: WorkplaceSnapshot[] = [];
+      const requestedRoom = rooms.find((processingRoom: Room) => processingRoom.id === idFromUrl());
       requestedRoom?.workplaces.forEach(workplaceId => {
-        const workplace = workplaces.find((processingWorkplace: Workplace) => processingWorkplace.id === workplaceId)
-        const employee = workplace?.employee ? workplace.employee : ''
+        const workplace = workplaces.find((processingWorkplace: Workplace) => processingWorkplace.id === workplaceId);
+        const employee = workplace?.employee ? workplace.employee : '';
         roomSnapshot.push({
           workplaceId: workplaceId,
-          employee: employee
+          employee: employee,
         })
       })
       return okResponse(roomSnapshot);
@@ -178,13 +185,13 @@ export class BackendInterceptor implements HttpInterceptor {
     // workplace functions
     function getAllWorkplaces() {
       if (!isLoggedIn()) return unauthorized();
-      return okResponse(workplaces)
+      return okResponse(workplaces);
     }
 
     function getWorkplace() {
       if (!isLoggedIn()) return unauthorized();
 
-      const requestedWorkplace = workplaces.find((processingWorkplace: Workplace) => processingWorkplace.id === idFromUrl())
+      const requestedWorkplace = workplaces.find((processingWorkplace: Workplace) => processingWorkplace.id === idFromUrl());
       return okResponse(requestedWorkplace);
     }
 
@@ -206,17 +213,17 @@ export class BackendInterceptor implements HttpInterceptor {
     }
 
     function editWorkplace() {
-      const workplace: Workplace = body
+      const workplace: Workplace = body;
 
       if (!workplaces.find((x: Workplace) => x.id === Number(workplace.id))) {
-        return errorResponse('Workplace "' + workplace.id + '" does not exist')
+        return errorResponse('Workplace "' + workplace.id + '" does not exist');
       }
 
-      const editIndex = workplaces.findIndex((processingWorkplace) => processingWorkplace.id === workplace.id)
-      workplaces.splice(editIndex, 1)
-      workplaces.splice(editIndex, 0, workplace)
-      localStorage.setItem('workplaces', JSON.stringify(workplaces))
-      return okResponse()
+      const editIndex = workplaces.findIndex((processingWorkplace) => processingWorkplace.id === workplace.id);
+      workplaces.splice(editIndex, 1);
+      workplaces.splice(editIndex, 0, workplace);
+      localStorage.setItem('workplaces', JSON.stringify(workplaces));
+      return okResponse();
     }
 
     // applications functions
@@ -224,12 +231,12 @@ export class BackendInterceptor implements HttpInterceptor {
     function submitApplication() {
       if (!isLoggedIn()) return unauthorized();
 
-      const application: Workplace = body
+      const application: Workplace = body;
       if (applications.find((processingApplication) => processingApplication.employee === application.employee)) {
-        return errorResponse('Application from"' + application.employee + '" already exists')
+        return errorResponse('Application from"' + application.employee + '" already exists');
       }
-      applications.push(application)
-      localStorage.setItem('applications', JSON.stringify(applications))
+      applications.push(application);
+      localStorage.setItem('applications', JSON.stringify(applications));
 
       return okResponse();
     }
@@ -254,7 +261,7 @@ export class BackendInterceptor implements HttpInterceptor {
 
       const employee = body;
       const applicationIndex = applications.findIndex((processingApplication) => processingApplication.employee === employee);
-      const application = applications[applicationIndex]
+      const application = applications[applicationIndex];
       if (!application) return errorResponse('Employee' + employee + 'does not exist');
 
       const editIndex = workplaces.findIndex((processingWorkplace) => processingWorkplace.id === application.id);
@@ -264,17 +271,17 @@ export class BackendInterceptor implements HttpInterceptor {
         employeeRole: application.employeeRole,
         equipment: workplaces[editIndex].equipment,
         workStatus: application.workStatus,
-        regime: application.regime
+        regime: application.regime,
       }
-      applications.splice(applicationIndex, 1)
-      localStorage.setItem('applications', JSON.stringify(applications))
+      applications.splice(applicationIndex, 1);
+      localStorage.setItem('applications', JSON.stringify(applications));
 
-      workplaces.splice(editIndex, 1)
-      workplaces.splice(editIndex, 0, editedWorkplace)
-      localStorage.setItem('workplaces', JSON.stringify(workplaces))
+      workplaces.splice(editIndex, 1);
+      workplaces.splice(editIndex, 0, editedWorkplace);
+      localStorage.setItem('workplaces', JSON.stringify(workplaces));
 
       const currentEmployee = employees.find((processingEmployee) => {
-        return employee === `${processingEmployee.firstName} ${processingEmployee.lastName} ${processingEmployee.patronymic}`
+        return employee === `${processingEmployee.firstName} ${processingEmployee.lastName} ${processingEmployee.patronymic}`;
       })
       if (!currentEmployee) {
         const splittedEmployee = employee.split(' ');
@@ -287,9 +294,9 @@ export class BackendInterceptor implements HttpInterceptor {
           isAdmin: false,
         };
         employees.push(newEmployee);
-        localStorage.setItem('employees', JSON.stringify(employees))
+        localStorage.setItem('employees', JSON.stringify(employees));
       }
-      return okResponse()
+      return okResponse();
     }
     // helper functions
 

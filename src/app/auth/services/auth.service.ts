@@ -7,8 +7,8 @@ import { Employee } from '@core/models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  private currentEmployeeSubject: BehaviorSubject<Employee>
-  currentEmployee: Observable<Employee>
+  private currentEmployeeSubject: BehaviorSubject<Employee>;
+  currentEmployee: Observable<Employee>;
 
   constructor(private http: HttpClient) {
     const currentEmployee: string = localStorage.getItem('currentEmployee') as string;
@@ -17,15 +17,15 @@ export class AuthenticationService {
   }
 
   get currentEmployeeValue(): Employee {
-    return this.currentEmployeeSubject.value
+    return this.currentEmployeeSubject.value;
   }
 
   get isCurrentEmployeeAdmin(): boolean {
-    return this.currentEmployeeSubject.value.isAdmin
+    return this.currentEmployeeSubject.value.isAdmin;
   }
 
   setPassword(username: string, password: string) {
-    return this.http.post<any>('/employees/setpassword', {username, password})
+    return this.http.post<any>('/employees/setpassword', {username, password});
   }
 
   login(username: string, password: string) {

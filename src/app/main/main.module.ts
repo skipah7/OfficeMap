@@ -16,25 +16,25 @@ import { ApplyFormComponent } from './components/apply-form/apply-form.component
     RoomComponent,
     WorkplaceSnapshotPipe,
     WorkplaceComponent,
-    ApplyFormComponent
+    ApplyFormComponent,
   ],
   imports: [
     CommonModule,
     RouterModule.forChild([{
       path: '',
-      component: HomeComponent
+      component: HomeComponent,
     }, {
       path: 'room',
-      component: RoomComponent
+      component: RoomComponent,
     }, {
       path: 'room/workplace',
-      component: WorkplaceComponent
+      component: WorkplaceComponent,
     }, {
       path: 'room/workplace/apply',
-      component: ApplyFormComponent
+      component: ApplyFormComponent,
     }]),
     DxVectorMapModule,
-    ControlsModule
+    ControlsModule,
   ],
   providers: []
 })

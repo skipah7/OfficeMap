@@ -8,12 +8,12 @@ const routes: Routes = [{
   canActivate: [AuthGuard],
   children: [{
     path: '',
-    loadChildren: () => import('./main/main.module').then((module) => module.MainModule)
+    loadChildren: () => import('./main/main.module').then((module) => module.MainModule),
   },
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then((module) => module.AdminModule),
-    canLoad: [AdminGuard]
+    canLoad: [AdminGuard],
   }]
 },
 {
@@ -24,12 +24,12 @@ const routes: Routes = [{
 // redirect to main in case of other routes
 {
   path: '**',
-  redirectTo: ''
+  redirectTo: '',
 }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [AuthGuard, AdminGuard]
+  providers: [AuthGuard, AdminGuard],
 })
 export class AppRoutingModule { }

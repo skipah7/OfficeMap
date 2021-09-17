@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-date-box',
   templateUrl: './date-box.component.html',
-  styleUrls: ['./date-box.component.scss']
+  styleUrls: ['./date-box.component.scss'],
 })
 export class DateBoxComponent implements OnInit {
   @Input() formGroup: FormGroup | null = null;

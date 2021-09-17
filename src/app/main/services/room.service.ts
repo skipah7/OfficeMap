@@ -6,6 +6,6 @@ import { WorkplaceSnapshot } from '@core/models'
 export class RoomService {
   constructor(private http: HttpClient) { }
   getRoomSnapshot(id: number) {
-    return this.http.get<WorkplaceSnapshot[]>(`/rooms/${id}`)
+    return this.http.get<WorkplaceSnapshot[]>(`/rooms/${id}`);
   }
 }

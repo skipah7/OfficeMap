@@ -211,23 +211,23 @@ export class AppComponent implements OnInit {
     private authenticationService: AuthenticationService
   ) {
     this.authenticationService.currentEmployee.subscribe(processingEmployee => {
-      this.currentEmployee = processingEmployee
-    })
+      this.currentEmployee = processingEmployee;
+    });
   }
 
   ngOnInit() {
-    localStorage.setItem('employees', JSON.stringify(this.employees))
-    localStorage.setItem('rooms', JSON.stringify(this.rooms))
-    localStorage.setItem('workplaces', JSON.stringify(this.workplaces))
-    localStorage.setItem('applications', JSON.stringify(this.applications))
+    localStorage.setItem('employees', JSON.stringify(this.employees));
+    localStorage.setItem('rooms', JSON.stringify(this.rooms));
+    localStorage.setItem('workplaces', JSON.stringify(this.workplaces));
+    localStorage.setItem('applications', JSON.stringify(this.applications));
   }
 
   get isCurrentEmployeeAdmin(): boolean {
-    return this.authenticationService.isCurrentEmployeeAdmin
+    return this.authenticationService.isCurrentEmployeeAdmin;
   }
 
   logout() {
-    this.authenticationService.logout()
-    this.router.navigate(['/login'])
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
   }
 }

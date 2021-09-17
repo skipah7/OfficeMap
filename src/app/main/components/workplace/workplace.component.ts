@@ -9,19 +9,19 @@ import { WorkplaceService } from '@main/services/workplace.service';
   selector: 'app-workplace',
   templateUrl: './workplace.component.html',
   styleUrls: ['./workplace.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WorkplaceComponent {
-  workplaceId: number = this.activatedRoute.snapshot.queryParams['id']
-  workplace$: Observable<Workplace> = this.workplaceService.getWorkplace(this.workplaceId)
+  workplaceId: number = this.activatedRoute.snapshot.queryParams['id'];
+  workplace$: Observable<Workplace> = this.workplaceService.getWorkplace(this.workplaceId);
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private workplaceService: WorkplaceService,
-    private router: Router
+    private router: Router,
   ) { }
 
   applyToWorkplace(id: number) {
-    this.router.navigate(['room/workplace/apply'], { queryParams: { workplaceId: id } })
+    this.router.navigate(['room/workplace/apply'], { queryParams: { workplaceId: id } });
   }
 }

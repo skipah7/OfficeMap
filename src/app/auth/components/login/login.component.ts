@@ -1,24 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ModalService } from '@shared/modals/services/modal.service';
 import { first } from 'rxjs/internal/operators/first';
 import { AuthenticationService } from '@auth/services/auth.service';
+import { ModalService } from '@shared/modals/services/modal.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   submitted: boolean = false;
-
   currentUser: string = '';
   newPassword: string = '';
 
   loginForm: FormGroup = this.formBuilder.group({
     username: [null, Validators.required],
-    password: [null]
+    password: [null],
   });
 
   constructor(
@@ -29,7 +28,7 @@ export class LoginComponent implements OnInit {
   ) {
     // redirect to home if already authorized
     if (this.authenticateService.currentEmployeeValue) {
-      this.router.navigate(['/'])
+      this.router.navigate(['/']);
     }
   }
 
@@ -39,15 +38,11 @@ export class LoginComponent implements OnInit {
 
   closeModal(id: string) {
     this.modalService.close(id);
-    this.authenticateService.setPassword(this.currentUser, this.newPassword).pipe(first()).subscribe()
-  }
-
-  ngOnInit(): void {
-    //this.loginForm.valueChanges.subscribe(value => console.log(value))
+    this.authenticateService.setPassword(this.currentUser, this.newPassword).pipe(first()).subscribe();
   }
 
   get form() {
-    return this.loginForm.controls
+    return this.loginForm.controls;
   }
 
   isNewPasswordEmpty(): boolean {
@@ -66,14 +61,14 @@ export class LoginComponent implements OnInit {
             this.currentUser = data.username;
             this.openModal('custom-modal');
             return;
-          }
+          };
           console.log('Successful log in');
           this.router.navigate(['/']);
         },
         error => {
           console.error(error);
         }
-      )
+      );
 
     this.submitted = false;
   }

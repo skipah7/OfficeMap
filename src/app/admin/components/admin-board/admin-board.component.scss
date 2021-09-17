@@ -1,13 +1,14 @@
 .dashboard {
   display: flex;
   flex-direction: row;
-  .dashboard-item {
-    margin: 30px;
 
+  .dashboard-item {
+    padding: 0px 30px 30px 30px;
+    min-width: 250px;
   }
 
   .dashboard-item-workplace {
-    margin: 30px;
+    padding: 0px 30px 30px 30px;
     width: 250px;
     label {
       display: block;
@@ -23,36 +24,48 @@
   }
 
   .dashboard-item-applications {
-    margin: 30px;
+    padding: 0px 30px 30px 30px;
     .application {
+      min-width: 330px;
       border: solid 1px;
+      border-radius: 10px;
       margin: 4px;
+      &:hover {
+        transform: scale(1.025);
+        transition: ease 0.2s;
+      }
     }
   }
 }
+
 ul {
   margin: 0px;
   padding: 0px;
   li {
     display: flex;
+    border-radius: 5px;
     flex-direction: row;
     justify-content: space-between;
-    padding: 2px;
-    margin: 2px;
+    padding: 4px;
     width: 300px;
   }
 }
 
+.employee:hover {
+  background-color: #dbd6d6;
+  cursor: pointer;
+}
 
 .workplace-buttons {
   display: flex;
   justify-content: space-around;
   margin: 4px;
   .delete-button {
-    background-color: red;
+    background-color: #f73939;
   }
 }
 
 .solid {
   font-weight: bold;
 }
+

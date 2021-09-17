@@ -30,7 +30,7 @@
   <div class="dashboard-item">
     <h3>Employees</h3>
     <ul *ngIf="employees$ | async">
-      <li *ngFor="let employee of employees$ | async">
+      <li class="employee" *ngFor="let employee of employees$ | async">
         <div (click)="employeeClicked(employee)">{{ employee.id }} - {{ employee.firstName }} {{ employee.lastName }} {{
           employee.patronymic }}</div>
         <button (click)="deleteEmployee(employee.id)">Delete</button>
@@ -46,7 +46,7 @@
       [readOnly]="isWorkplaceChoosed()" [isValid]="!(this.editWorkplacesSubmitted && formW.equipment.errors)">
     </app-text-box>
     <app-select-box [formGroup]="editWorkplaceForm" label="Choose employee" controlName="employee"
-      [items]="getEmployeesSnapshot()" [readOnly]="isWorkplaceChoosed()"
+      [items]="getEmployeesSnapshot" [readOnly]="isWorkplaceChoosed()"
       [isValid]="!(this.editWorkplacesSubmitted && formW.employee.errors)"></app-select-box>
     <app-select-box [formGroup]="editWorkplaceForm" label="Edit role" controlName="role" [items]="roles"
       [readOnly]="isEmployeeChoosed()" [isValid]="!(this.editWorkplacesSubmitted && formW.role.errors)">

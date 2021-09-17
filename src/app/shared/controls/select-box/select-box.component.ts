@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-select-box',
   templateUrl: './select-box.component.html',
-  styleUrls: ['./select-box.component.scss']
+  styleUrls: ['./select-box.component.scss'],
 })
 export class SelectBoxComponent implements OnInit {
   @Input() formGroup: FormGroup | null = null;
