@@ -102,7 +102,7 @@ export class BackendInterceptor implements HttpInterceptor {
 
       const employee: Employee = body;
       if (employees.find((x: Employee) => x.username === employee.username)) {
-        return errorResponse('Employeename "' + employee.username + '" is already taken');
+        return errorResponse('Employees username "' + employee.username + '" is already taken');
       }
 
       employee.id = employees.length ? Math.max(...employees.map((x: Employee) => x.id)) + 1 : 1;
@@ -116,7 +116,7 @@ export class BackendInterceptor implements HttpInterceptor {
       const employee: Employee = body;
 
       if (!employees.find((x: Employee) => x.id === Number(employee.id))) {
-        return errorResponse('Employeename "' + employee.username + '" does not exist');
+        return errorResponse('Employee with id "' + employee.id + '" does not exist');
       };
 
       const editIndex = employees.findIndex((processingEmployee) => processingEmployee.id === employee.id);
@@ -233,7 +233,7 @@ export class BackendInterceptor implements HttpInterceptor {
 
       const application: Workplace = body;
       if (applications.find((processingApplication) => processingApplication.employee === application.employee)) {
-        return errorResponse('Application from"' + application.employee + '" already exists');
+        return errorResponse('Application from "' + application.employee + '" already exists');
       }
       applications.push(application);
       localStorage.setItem('applications', JSON.stringify(applications));
@@ -262,7 +262,7 @@ export class BackendInterceptor implements HttpInterceptor {
       const employee = body;
       const applicationIndex = applications.findIndex((processingApplication) => processingApplication.employee === employee);
       const application = applications[applicationIndex];
-      if (!application) return errorResponse('Employee' + employee + 'does not exist');
+      if (!application) return errorResponse('Application with' + employee + 'does not exist');
 
       const editIndex = workplaces.findIndex((processingWorkplace) => processingWorkplace.id === application.id);
       const editedWorkplace: Workplace = {

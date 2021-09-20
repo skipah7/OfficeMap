@@ -98,11 +98,15 @@ export class AdminBoardComponent implements OnInit {
   // application section
 
   denyApplication(employee: string) {
-    this.adminService.denyApplication(employee).pipe(first()).subscribe();
+    this.adminService.denyApplication(employee)
+      .pipe(first())
+      .subscribe(() => {}, (error) => alert(error.error.message));
   }
 
   acceptApplication(employee: string) {
-    this.adminService.acceptApplication(employee).pipe(first()).subscribe();
+    this.adminService.acceptApplication(employee)
+      .pipe(first())
+      .subscribe(() => {}, (error) => alert(error.error.message));
     this.initWorkplaces();
     this.initEmployees();
   }
@@ -172,7 +176,7 @@ export class AdminBoardComponent implements OnInit {
 
     const value = this.editWorkplaceForm.value;
     if (this.workplaces.find((workplace) => workplace.employee === value.employee)) {
-      console.error('This employee already has a workplace');
+      alert('This employee already has a workplace');
       return;
     }
 
@@ -186,7 +190,10 @@ export class AdminBoardComponent implements OnInit {
       workStatus: value.workStatus,
       regime: [shiftStart, shiftEnd],
     };
-    this.adminService.editWorkplace(newWorkplace).pipe(first()).subscribe();
+    this.adminService.editWorkplace(newWorkplace)
+      .pipe(first())
+      .subscribe(() => {}, (error) => alert(error.error.message));
+
     this.initWorkplaces();
     this.editWorkplacesSubmitted = false;
   }
@@ -277,7 +284,8 @@ export class AdminBoardComponent implements OnInit {
       .pipe(first()).subscribe(() => {
         this.employeesSnapshot.push(this.employeeFullName(this.addEmployeeForm.value));
         this.cdr.markForCheck();
-      });
+      },
+      (error) => alert(error.error.message));
     this.addEmployeeSubmitted = false;
   }
 
@@ -288,7 +296,7 @@ export class AdminBoardComponent implements OnInit {
     this.editEmployeeForm.value.id = Number(this.editEmployeeForm.value.id);
     this.adminService.editEmployee(this.editEmployeeForm.value)
       .pipe(first())
-      .subscribe();
+      .subscribe(() => {}, (error) => alert(error.error.message));
 
     this.initEmployees();
     this.initWorkplaces()

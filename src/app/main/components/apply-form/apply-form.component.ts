@@ -76,7 +76,9 @@ export class ApplyFormComponent {
       workStatus: form.workStatus,
       regime: [shiftStart, shiftEnd],
     };
-    this.applyService.sendApplication(application).pipe(first()).subscribe();
+    this.applyService.sendApplication(application)
+      .pipe(first())
+      .subscribe(() => alert('Application submitted'), (error) => alert(error.error.message));
     this.submitted = false;
   }
 }

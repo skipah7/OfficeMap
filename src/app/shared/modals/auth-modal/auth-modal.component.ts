@@ -12,7 +12,10 @@ export class AuthModalComponent implements OnInit, OnDestroy {
     @Input() id: string ='';
     private element: any;
 
-    constructor(private modalService: ModalService, private el: ElementRef) {
+    constructor(
+      private modalService: ModalService,
+      private el: ElementRef
+      ) {
         this.element = el.nativeElement;
     }
 

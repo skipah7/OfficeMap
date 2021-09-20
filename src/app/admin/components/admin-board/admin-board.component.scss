@@ -7,12 +7,20 @@
     min-width: 250px;
   }
 
+  .dashboard-item-employee {
+    min-width: 350px;
+
+    .employee {
+      width: 350px;
+    }
+  }
+
   .dashboard-item-workplace {
     padding: 0px 30px 30px 30px;
     width: 250px;
     label {
       display: block;
-      padding: 6px;
+      padding: 8px 8px 4px 0px;
     }
     .shift-box {
       display: flex;
@@ -27,9 +35,10 @@
     padding: 0px 30px 30px 30px;
     .application {
       min-width: 330px;
-      border: solid 1px;
+      border: 1px solid #a8a7a7;
       border-radius: 10px;
       margin: 4px;
+      padding: 6px;
       &:hover {
         transform: scale(1.025);
         transition: ease 0.2s;
@@ -61,7 +70,7 @@ ul {
   justify-content: space-around;
   margin: 4px;
   .delete-button {
-    background-color: #f73939;
+    background-color: #fa685d;
   }
 }
 

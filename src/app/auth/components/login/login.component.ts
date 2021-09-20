@@ -66,7 +66,7 @@ export class LoginComponent {
           this.router.navigate(['/']);
         },
         error => {
-          console.error(error);
+          alert(error.error.message);
         }
       );
 

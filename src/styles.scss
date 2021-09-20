@@ -3,3 +3,15 @@
    display: block;
    margin-bottom: 24px;
  }
+
+ button {
+  padding: 8px 20px 8px 20px;
+  height: 40px;
+  border-radius: 16px;
+  border: none;
+  background-color: #e4e0e0;
+  font-size: 15px;
+  &:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  }
+}

@@ -27,7 +27,7 @@
     <app-text-box [formGroup]="editEmployeeForm" label="Password" controlName="password"></app-text-box>
     <button (click)="editEmployee()">Edit employee</button>
   </div>
-  <div class="dashboard-item">
+  <div class="dashboard-item-employee">
     <h3>Employees</h3>
     <ul *ngIf="employees$ | async">
       <li class="employee" *ngFor="let employee of employees$ | async">
