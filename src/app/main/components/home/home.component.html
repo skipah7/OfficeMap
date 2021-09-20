@@ -3,6 +3,9 @@
     [projection]="projection"
     [controlBar]="{ enabled: false }"
     (onClick)="layerClicked($event)">
+    <dxo-tooltip
+        [enabled]="true"
+        [customizeTooltip]="customizeTooltip"></dxo-tooltip>
     <dxi-layer
         [hoverEnabled]="false"
         [dataSource]="buildingData"

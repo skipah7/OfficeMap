@@ -42,14 +42,14 @@ export class HomeComponent {
     }
   }
 
-  // customizeTooltip(arg: any) {
-  //   if (arg.layer.name === 'rooms') {
-  //     return {
-  //       text: "Square: " + arg.attribute('workingPlaces') + " ft&#178"
-  //     }
-  //   }
-  //   return { text: '' }
-  // }
+  customizeTooltip(arg: any) {
+    if (arg.layer.name === 'rooms') {
+      return {
+        text: `Has ${arg.attribute('workplaces')} workplaces`
+      }
+    }
+    return { text: '' }
+  }
 
   // customizeLayers(elements: any) {
   //   elements.forEach((element: any) => {

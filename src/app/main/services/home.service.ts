@@ -15,6 +15,7 @@ export class Feature {
 
 export class FeatureProperty {
   name?: string;
+  workplaces?: number;
   id?: number;
 }
 
@@ -74,6 +75,7 @@ let roomsData: FeatureCollection = {
       type: 'Feature',
       properties: {
         name: 'Room 1',
+        workplaces: 3,
         id: 1
       },
       geometry: {
@@ -89,6 +91,7 @@ let roomsData: FeatureCollection = {
       type: 'Feature',
       properties: {
         name: 'Room 2',
+        workplaces: 4,
         id: 2
       },
       geometry: {
@@ -104,6 +107,7 @@ let roomsData: FeatureCollection = {
       type: 'Feature',
       properties: {
         name: 'Room 3',
+        workplaces: 2,
         id: 3
       },
       geometry: {
@@ -119,6 +123,7 @@ let roomsData: FeatureCollection = {
       type: 'Feature',
       properties: {
         name: 'Room 4',
+        workplaces: 3,
         id: 4
       },
       geometry: {
